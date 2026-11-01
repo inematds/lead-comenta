@@ -1,0 +1,40 @@
+{
+  "titulo": "Seu primeiro agente de IA na empresa, passo a passo",
+  "subtitulo": "Descubra qual tarefa entregar primeiro a um agente, quanto isso custa em reais e se ele está seguro para ligar.",
+  "para_quem": "Para o dono de pequena ou média empresa que quer parar de usar o ChatGPT solto e pôr um agente para trabalhar num processo de verdade.",
+  "passos": [
+    {
+      "titulo": "Liste as tarefas que se repetem",
+      "texto": "Anote as tarefas que acontecem toda semana na empresa. Se você não lembra de todas, peça para a equipe anotar por três dias. Para cada uma, escreva quantas vezes ela acontece por semana e quantos minutos leva. Uma estimativa já serve.",
+      "comando": "Tarefa | Vezes por semana | Minutos | Regra clara? | Dado já no computador? | Estrago se der errado"
+    },
+    {
+      "titulo": "Ordene a fila e pegue os 3 primeiros",
+      "texto": "Dê uma nota a cada tarefa com a conta abaixo. Ela serve para pôr as tarefas em ordem e pode errar. Comece pelos três primeiros da fila. Uma tarefa de risco alto pode entrar na fila, mas só se uma pessoa aprovar cada resposta.",
+      "comando": "nota = horas por mês × clareza da regra × dado disponível ÷ risco"
+    },
+    {
+      "titulo": "Calcule quanto custa cada tarefa",
+      "texto": "Pegue o primeiro da fila. Compare o custo de hoje, com gente fazendo, com o custo do agente: a conta da IA mais o tempo de alguém revisando. O número que importa é o custo por tarefa, contando a revisão e as tarefas que voltam para uma pessoa.",
+      "comando": ""
+    },
+    {
+      "titulo": "Confira se o agente pode ser ligado",
+      "texto": "O agente só pode acessar o que a tarefa precisa, e alguém precisa acompanhar o que ele faz. Passe pelo checklist do agente seguro. Os itens 2, 4 e 10 são obrigatórios: se faltar qualquer um deles, o agente fica no piloto e uma pessoa supervisiona.",
+      "comando": ""
+    },
+    {
+      "titulo": "Rode um piloto de 30 dias",
+      "texto": "Meça a tarefa antes de começar: quantas vezes acontece e quanto tempo leva. Depois ligue o agente só nesse processo. Toda semana, anote os quatro números abaixo.",
+      "comando": "Semana | Tarefas feitas pelo agente | Quantas voltaram para uma pessoa | Custo da IA | Reclamações"
+    },
+    {
+      "titulo": "Refaça a conta e siga para o próximo",
+      "texto": "No fim dos 30 dias, refaça o cálculo do passo 3 com os números reais. Se a economia apareceu e o checklist continua em dia, passe para o segundo da fila. Vá sempre um processo de cada vez.",
+      "comando": ""
+    }
+  ],
+  "cuidado": "Uma tarefa em que o erro custa caro só entra com uma pessoa aprovando cada resposta do agente.",
+  "proximo": "O kit completo e gratuito tem o Raio-X, a calculadora, o checklist e o comparador prontos para usar no navegador, sem cadastro, e também está no GitHub: github.com/inematds/empresa-de-ia",
+  "link_final": "https://inematds.github.io/empresa-de-ia/guia/"
+}
