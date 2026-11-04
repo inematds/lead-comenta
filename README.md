@@ -1,8 +1,16 @@
 # lead-comenta
 
+[![lead-comenta: comentário vira guia](guia/assets/banner.jpg)](https://inematds.github.io/lead-comenta/guia/)
+
+**🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
+
 ## O que é
 
 O lead-comenta cria a página do "guia grátis" que você promete quando diz "comenta PALAVRA que eu te mando". Serve para quem posta carrossel ou reel com esse convite e precisa ter o material pronto antes de publicar. Você dá a palavra, o tema e uma fonte (uma página ou um arquivo de texto); ele escreve um guia curto de 4 a 7 passos só com o que está na fonte, gera uma página no padrão INEMA e os textos prontos para responder o comentário, a mensagem direta e o story. Precisa de Python 3 e do Claude Code; a publicação é pelo GitHub Pages.
+
+## 📖 Guia de uso
+
+Guia completo (landing + passo a passo): **https://inematds.github.io/lead-comenta/guia/**
 
 ## Usar
 

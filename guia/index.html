@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lead-comenta — do "comenta PALAVRA" à página do guia grátis</title>
+<meta name="description" content="Ferramenta que transforma o convite &quot;comenta PALAVRA&quot; do seu post numa página de material grátis no GitHub Pages, com as respostas prontas para o comentário, o direct e o story.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/lead-comenta/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/lead-comenta/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/lead-comenta/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#FACC15; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#a16207; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  body.light pre .k{color:#f0c070}
+  body.light .btn:not(.ghost), body.light .step .b{background:#FACC15}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  body.light nav{background:rgba(246,247,249,.85)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(250,204,21,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(250,204,21,.18),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0 0 .6em}
+  .card p:last-child{margin-bottom:0}
+  .aviso{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--amb);border-radius:0 14px 14px 0;padding:18px 20px;margin-top:26px;max-width:74ch}
+  .aviso h3{font-size:1.05rem;margin-bottom:.4em}
+  .aviso p{margin:0;color:var(--mut)}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .cpw{position:relative}
+  .cpw pre{padding-right:78px}
+  .cpb{position:absolute;top:8px;right:8px;background:var(--amb);color:#1a1206;border:0;border-radius:8px;font:600 .75rem Sora,sans-serif;padding:.4em .7em;cursor:pointer}
+  body.light .cpb{background:#FACC15}
+  @media(max-width:620px){#guia pre,#pre pre{white-space:pre-wrap;overflow-wrap:anywhere}}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .step ul{color:var(--mut);margin:.2em 0 .7em;padding-left:1.2em}
+  .ex{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:start}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;height:auto;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">💬</span> lead-comenta</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">O que é</a>
+    <a class="sec" href="#fluxo">Como funciona</a>
+    <a class="sec" href="#guia">Guia de uso</a>
+    <a class="sec" href="#exemplos">Exemplo</a>
+    <a class="sec" href="#roadmap">Limites</a>
+    <span class="lang"><a class="on" href="./">PT</a><a href="en/">EN</a><a href="es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/lead-comenta" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Instagram · Reels · Carrossel</span>
+      <h1>Quem comentou a palavra recebe um <span class="amb">guia</span> de verdade</h1>
+      <p class="lead">Você diz a palavra, o tema e de onde tirar o conteúdo. Sai uma página de material grátis no ar e as respostas prontas para colar no comentário, no direct e no story.</p>
+      <div class="cta">
+        <a class="btn" href="#guia">Começar o guia</a>
+        <a class="btn ghost" href="https://github.com/inematds/lead-comenta" target="_blank" rel="noopener">Ver no GitHub</a>
+      </div>
+    </div>
+    <figure><img src="assets/banner.jpg" alt="Banner do lead-comenta: comentário vira guia"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">Em resumo</span>
+  <p>O lead-comenta cria a página do "guia grátis" que você promete quando diz no post "comenta PALAVRA que eu te mando". Serve para quem posta reel ou carrossel com esse convite e precisa ter o material pronto antes de publicar. Você dá a palavra, o tema e uma fonte (uma página na internet ou um arquivo de texto seu); ele escreve um guia curto de 4 a 7 passos só com o que está na fonte, publica a página no GitHub Pages (o serviço grátis do GitHub que deixa páginas no ar) e prepara os textos de resposta. Ele não manda mensagem sozinho: hoje você cola a resposta no direct à mão. Para usar, precisa de Python 3, do Claude Code e de uma conta no GitHub.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">O que é</span>
+  <h2>O material grátis pronto antes do post</h2>
+  <p class="sub">Uma página por palavra, com o conteúdo conferido e as respostas escritas. Você só confere e responde.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="assets/banner-grade.jpg" alt="As seis etapas: palavra, fonte, guia de 4 a 7 passos, página no ar, respostas prontas e você responde" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>📄 Uma página por palavra</h3><p>Cada palavra vira um endereço próprio, do tipo <code>.../paginas/agente/</code>: título, para quem é, de 4 a 7 passos, um cuidado e o link para o material completo. Abre bem no celular e tem botão de copiar nos textos de exemplo.</p></div>
+    <div class="card"><h3>🔒 Só o que está na fonte</h3><p>O Claude escreve o guia só com o que está na página ou no arquivo que você indicou, sem inventar número nem ferramenta. Se a fonte tem pouco conteúdo, o guia sai curto. Você lê antes de publicar.</p></div>
+    <div class="card"><h3>✍️ Respostas prontas para colar</h3><p>Para cada palavra sai um <code>respostas.md</code> com três textos: a resposta no comentário (sem link, porque o Instagram tende a esconder comentário com link), a mensagem do direct com o link e o texto do story.</p></div>
+  </div>
+</div></section>
+
+<section id="fluxo"><div class="wrap">
+  <span class="chip">Como funciona</span>
+  <h2>Do comentário à página no ar</h2>
+  <p class="sub">Um comando gera tudo; você confere e publica. O texto é escrito pelo Claude Code rodando sem janela (<code>claude -p</code>), pela sua assinatura: não usa chave de API paga.</p>
+  <div class="flow">
+    <span>Palavra + tema</span><span class="arr">→</span>
+    <span>Fonte (link ou arquivo)</span><span class="arr">→</span>
+    <span>Guia de 4 a 7 passos</span><span class="arr">→</span>
+    <span>Página + respostas.md</span><span class="arr">→</span>
+    <span>Você confere</span><span class="arr">→</span>
+    <span>git push → página no ar</span><span class="arr">→</span>
+    <span>Você responde no direct</span>
+  </div>
+  <div class="aviso">
+    <h3>E a mensagem automática no direct?</h3>
+    <p>Ainda não existe. O lead-comenta não envia mensagem para ninguém: você (ou alguém da sua equipe) abre o direct de quem comentou e cola o texto pronto. As formas de automatizar o envio estão descritas no <a href="https://github.com/inematds/lead-comenta/blob/main/DECISAO-DM.md" target="_blank" rel="noopener">DECISAO-DM.md</a> e ainda não foram escolhidas.</p>
+  </div>
+</div></section>
+
+<section id="pre"><div class="wrap">
+  <span class="chip">Pré-requisitos</span>
+  <h2>O que precisa estar no computador</h2>
+  <p class="sub">Um computador Linux ou Mac (no Windows, pelo WSL, o Linux que roda dentro do Windows). Os comandos são digitados no terminal, a tela de texto do computador.</p>
+  <div class="grid g3">
+    <div class="card"><h3>Python 3</h3><p>É a linguagem em que a ferramenta foi escrita. Não precisa instalar nenhum pacote extra. Confira se já tem (no Mac, se faltar: <code>brew install python</code>; no Ubuntu: <code>sudo apt install python3</code>).</p><pre><span class="k">python3</span> --version</pre></div>
+    <div class="card"><h3>Claude Code, já logado</h3><p>É ele que escreve o guia. Instale pelo site <a href="https://claude.com/claude-code" target="_blank" rel="noopener">claude.com/claude-code</a>, abra uma vez com <code>claude</code> e entre na sua conta. Precisa de um plano pago do Claude (Pro ou acima). Depois confira:</p><pre><span class="k">claude</span> --version</pre></div>
+    <div class="card"><h3>git, gh e conta no GitHub</h3><p>O git baixa e publica o projeto; o <code>gh</code> é o programa do GitHub para o terminal. A página fica no ar pelo GitHub Pages da sua conta; o arquivo que publica (<code>.github/workflows/pages.yml</code>) já vem no projeto.</p><p><b>Ubuntu ou WSL</b></p><pre><span class="k">sudo apt install</span> git gh</pre><p><b>Mac</b></p><pre><span class="k">brew install</span> git gh</pre><p>Se o Ubuntu disser que não encontrou o pacote <code>gh</code>, siga as instruções de <a href="https://cli.github.com" target="_blank" rel="noopener">cli.github.com</a>.</p></div>
+  </div>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Guia de uso · passo a passo</span>
+  <h2>Da palavra ao primeiro guia no ar</h2>
+  <p class="sub">Comandos copiáveis, na ordem. Os passos 1 e 2 são feitos uma vez só; do 3 ao 7, uma vez por palavra.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Baixe o projeto e teste</h3>
+    <p>Baixa a ferramenta e lista as palavras que já existem. Se aparecer a linha do <code>AGENTE</code> (o exemplo que vem junto), está funcionando.</p>
+<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/lead-comenta</span> ~/lead-comenta
+<span class="k">cd</span> ~/lead-comenta
+<span class="k">python3</span> lead.py lista</pre>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Crie a sua cópia no GitHub (uma vez)</h3>
+    <p>As páginas precisam ficar na sua conta. Primeiro, entre na sua conta do GitHub pelo terminal. A opção <code>--scopes workflow</code> dá permissão para enviar o arquivo que publica as páginas. O comando faz quatro perguntas; responda assim:</p>
+    <ul>
+      <li>Onde você usa o GitHub: <b>GitHub.com</b></li>
+      <li>Protocolo: <b>HTTPS</b></li>
+      <li>Autenticar o git com a sua conta: <b>Yes</b> (sim)</li>
+      <li>Como entrar: <b>Login with a web browser</b>; copie o código que aparece, aperte Enter e cole o código na página que abrir.</li>
+    </ul>
+<pre><span class="k">gh auth login</span> --scopes workflow</pre>
+    <p>Na primeira vez, o git também quer saber o seu nome e e-mail para registrar quem enviou cada mudança. Troque pelos seus:</p>
+<pre><span class="k">git config</span> --global user.name <span class="s">"Seu Nome"</span>
+<span class="k">git config</span> --global user.email <span class="s">"voce@exemplo.com"</span></pre>
+    <p>Descubra o seu nome de usuário no GitHub; ele aparece na tela. No bloco seguinte, troque <code>SEU-USUARIO</code> por ele. O primeiro comando cria o seu repositório (a pasta do projeto no GitHub), o segundo liga o GitHub Pages nele e o terceiro envia o projeto.</p>
+<pre><span class="k">gh api</span> user -q .login</pre>
+<pre><span class="k">gh repo create</span> lead-comenta --public --source . --remote meu
+<span class="k">gh api</span> -X POST repos/SEU-USUARIO/lead-comenta/pages -f build_type=workflow
+<span class="k">git push</span> meu main</pre>
+    <p>Por fim, diga à ferramenta qual é o endereço das suas páginas, para o link certo entrar nas respostas. Esse <code>export</code> vale até fechar o terminal; para não repetir, cole a mesma linha no fim do arquivo <code>~/.bashrc</code> (no Mac, <code>~/.zshrc</code>).</p>
+<pre><span class="k">export</span> LEAD_BASE_URL=<span class="s">https://SEU-USUARIO.github.io/lead-comenta/paginas</span></pre>
+    <p>A sua cópia vem com o exemplo <code>AGENTE</code> do INEMA, que continua apontando para o endereço do INEMA. Pode deixar como referência ou apagar a pasta <code>paginas/agente</code> e o trecho <code>"AGENTE"</code> do arquivo <code>palavras.json</code>.</p>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Escolha a palavra e a fonte</h3>
+    <ul>
+      <li><b>Palavra:</b> a mesma que você pede no post. Uma palavra só, de 3 a 14 letras ou números, sem espaço. Ela vira maiúscula e dá o nome da página.</li>
+      <li><b>Tema:</b> o assunto do post, numa frase.</li>
+      <li><b>Fonte:</b> de onde sai o conteúdo. Pode ser o link de uma página pública ou um arquivo de texto seu (<code>.md</code> ou <code>.txt</code>). Guarde o arquivo fora da pasta do projeto, na sua pasta pessoal (<code>~</code>): tudo o que fica dentro da pasta do projeto vai para o GitHub, que é público. Para criar o arquivo, abra um editor de texto (no terminal: <code>nano ~/meu-material.md</code>), cole o conteúdo e salve (no nano: Ctrl+O, Enter e Ctrl+X). Confira se a fonte trata do mesmo assunto do post.</li>
+    </ul>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Gere a página</h3>
+    <p>Troque <code>PROMPT</code>, o tema e a fonte pelos seus. A tela mostra "lendo a fonte…", depois "escrevendo o guia (claude -p)…" e, no fim, "pronto" com o caminho da página. Pode levar alguns minutos.</p>
+<pre><span class="k">python3</span> lead.py nova PROMPT --tema <span class="s">"5 prompts para responder clientes"</span> --fonte ~/meu-material.md</pre>
+    <p>O botão "Ver o material completo" leva à fonte, se ela for um link. Para apontar para outro lugar (seu curso, seu site), acrescente <code>--link-final https://seu-site</code>. Se a palavra já existe, a ferramenta avisa; para gerar de novo por cima, acrescente <code>--refaz</code>.</p>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Confira antes de publicar</h3>
+    <p>Abra a página no navegador e leia cada passo: nada pode estar fora do que a fonte diz. O primeiro comando é do Linux; no Mac, troque <code>xdg-open</code> por <code>open</code>; no WSL, por <code>explorer.exe</code>. Se algo não estiver certo, melhore a fonte e gere de novo com <code>--refaz</code>.</p>
+<pre><span class="k">xdg-open</span> paginas/prompt/index.html</pre>
+  </div></div>
+
+  <div class="step"><div class="b">6</div><div>
+    <h3>Publique</h3>
+    <p>Envia a página para a sua cópia no GitHub. Ela fica no ar em cerca de 1 minuto (na primeira publicação pode levar alguns minutos; o andamento aparece na aba Actions do seu repositório), no endereço <code>https://SEU-USUARIO.github.io/lead-comenta/paginas/prompt/</code>.</p>
+<pre><span class="k">git add</span> -A
+<span class="k">git commit</span> -m <span class="s">"guia PROMPT"</span>
+<span class="k">git push</span> meu main</pre>
+  </div></div>
+
+  <div class="step"><div class="b">7</div><div>
+    <h3>Responda quem comentou</h3>
+    <p>Mostra os três textos prontos. Para cada pessoa que comentou: primeiro mande no direct dela a mensagem com o link; depois responda o comentário com o texto curto ("Te mandei no direct!"). O texto do story serve para lembrar quem ainda não comentou. Os mesmos textos ficam salvos em <code>paginas/prompt/respostas.md</code>.</p>
+<pre><span class="k">python3</span> lead.py resposta PROMPT</pre>
+  </div></div>
+</div></section>
+
+<section id="exemplos"><div class="wrap">
+  <span class="chip">Exemplo</span>
+  <h2>A página da palavra AGENTE</h2>
+  <p class="sub">Tema "6 tarefas chatas que um agente de IA já faz por você (pequena empresa)", com o guia de um kit gratuito do INEMA como fonte. Saiu um guia de 6 passos. <a href="https://inematds.github.io/lead-comenta/paginas/agente/" target="_blank" rel="noopener">Abrir a página</a>.</p>
+  <div class="ex">
+    <figure><img src="assets/exemplo-pc.jpg" alt="Página do guia AGENTE no computador: título, para quem é e os primeiros passos" loading="lazy"><figcaption>No computador: etiqueta com a palavra, título, para quem é e os passos numerados.</figcaption></figure>
+    <figure><img src="assets/exemplo-celular.jpg" alt="Página do guia AGENTE no celular, com o botão copiar no primeiro passo" loading="lazy"><figcaption>No celular, como a pessoa abre pelo direct.</figcaption></figure>
+  </div>
+  <p class="mut" style="margin:26px 0 8px">E o <code>respostas.md</code> que saiu junto:</p>
+<pre><span class="c">## Resposta pública no comentário (curta, sem link: o Instagram esconde comentário com link)</span>
+Te mandei no direct! Se não chegar, me chama por lá com AGENTE.
+
+<span class="c">## Mensagem direta (DM)</span>
+Oi! Aqui está o guia grátis que você pediu: **Seu primeiro agente de IA na empresa, passo a passo**
+https://inematds.github.io/lead-comenta/paginas/agente/
+São 6 passos curtos. Qualquer dúvida, responde aqui.
+
+<span class="c">## Story (texto)</span>
+Quem comentou AGENTE: o guia já está no seu direct. Ainda não comentou? Vai no post e comenta AGENTE.</pre>
+</div></section>
+
+<section id="roadmap"><div class="wrap">
+  <span class="chip">Limites e próximos passos</span>
+  <h2>O que já faz e o que ainda não faz</h2>
+  <p class="sub">Sem promessa: o que está pronto e o que depende de decisão.</p>
+  <div class="phase"><div class="tag">1.0 ✔</div><div class="d"><strong>Página, respostas e registro</strong><span>Guia de 4 a 7 passos só da fonte, página no GitHub Pages, respostas prontas e a lista de palavras em <code>palavras.json</code>.</span></div></div>
+  <div class="phase"><div class="tag">Limite</div><div class="d"><strong>A fonte manda</strong><span>O guia só tem o que está na fonte. Fonte pobre, guia curto.</span></div></div>
+  <div class="phase"><div class="tag">Em aberto</div><div class="d"><strong>Envio automático da mensagem</strong><span>Não existe hoje. As opções (responder à mão, uma ferramenta de automação de direct ou a API oficial do Instagram) estão no DECISAO-DM.md, aguardando decisão.</span></div></div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Python 3</div><div class="pill">Claude Code (assinatura)</div><div class="pill">GitHub Pages</div>
+    <p style="margin-top:18px">lead-comenta · código MIT ·
+      <a href="https://github.com/inematds/lead-comenta">inematds/lead-comenta</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('#pre pre, #guia pre').forEach(function(pre){
+    var w=document.createElement('div'); w.className='cpw'; pre.parentNode.insertBefore(w,pre); w.appendChild(pre);
+    var b=document.createElement('button'); b.type='button'; b.className='cpb'; b.textContent=b.dataset.t='copiar';
+    b.addEventListener('click',function(){ navigator.clipboard.writeText(pre.innerText).then(function(){ b.textContent='copiado'; setTimeout(function(){ b.textContent=b.dataset.t; },1500); }); });
+    w.appendChild(b);
+  });
+  (function(){
+    var KEY='lead-comenta-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+  })();
+</script>
+</body>
+</html>
